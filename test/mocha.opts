@@ -1,0 +1,4 @@
+--reporter spec
+--check-leaks
+--recursive
+--timeout 10000

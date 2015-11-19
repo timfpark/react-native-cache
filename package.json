@@ -1,0 +1,22 @@
+{
+  "name": "react-native-cache",
+  "version": "1.0.1",
+  "description": "LRU cache built on AsyncStorage for react-native",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/timfpark/react-native-cache.git"
+  },
+  "author": "Tim park",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/timfpark/react-native-cache/issues"
+  },
+  "homepage": "https://github.com/timfpark/react-native-cache#readme",
+  "dependencies": {
+    "async": "^0.2.10"
+  }
+}
