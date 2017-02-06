@@ -40,7 +40,7 @@ Getting an item from the cache also moves it to the end of the LRU list: it will
 ### Delete an item from the cache
 
 ```javascript
-cache.delItem('key1', function(err) {
+cache.removeItem('key1', function(err) {
     // 'key1' is no more.
 });
 ```
