@@ -26,7 +26,7 @@ describe('cache', function() {
     it('can delete entry', function(done) {
         cache.setItem('key1', 'value1', function(err) {
             assert(!err);
-            cache.delItem('key1', function(err) {
+            cache.removeItem('key1', function(err) {
                 assert(!err);
                 cache.getItem('key1', function(err, value) {
                     assert(!err);
