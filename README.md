@@ -1,6 +1,16 @@
 # react-native-cache
 
 LRU cache built on top of React Native's AsyncStorage (or included MemoryStore) and automatic pruning of least recently used items.
+## Installation
+
+* Run the following command.
+```shell
+npm install --save react-native-cache
+```
+* Import the library.
+```javascript
+import { Cache } from 'react-native-cache';
+```
 
 ## Usage
 
