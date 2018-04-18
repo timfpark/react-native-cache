@@ -23,6 +23,15 @@ describe("cache", function() {
         });
     });
 
+    it("can get a nonexistant item", function(done) {
+        cache.getItem("doesnotexist", function(err, value) {
+            assert(!err);
+            assert.equal(value, undefined);
+
+            done();
+        });
+    });
+
     it("can delete entry", function(done) {
         cache.setItem("key1", "value1", function(err) {
             assert(!err);
