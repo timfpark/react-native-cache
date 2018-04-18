@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/timfpark/react-native-cache#readme",
   "dependencies": {
-    "async": "^0.2.10"
+    "async": "^0.2.10",
+    "mocha": "^5.1.0"
   }
 }
