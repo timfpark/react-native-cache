@@ -1,6 +1,6 @@
 {
     "name": "react-native-cache",
-    "version": "1.1.4",
+    "version": "1.1.5",
     "description": "LRU cache built on AsyncStorage for react-native",
     "main": "lib/index.js",
     "scripts": {
