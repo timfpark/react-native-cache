@@ -1,6 +1,6 @@
 {
     "name": "react-native-cache",
-    "version": "1.1.7",
+    "version": "1.1.8",
     "description": "LRU cache built on AsyncStorage for react-native",
     "main": "lib/index.js",
     "scripts": {
@@ -17,9 +17,9 @@
     },
     "homepage": "https://github.com/timfpark/react-native-cache#readme",
     "dependencies": {
-        "async": "^2.6.1"
+        "async": "^3.1.0"
     },
     "devDependencies": {
-        "mocha": "^5.2.0"
+        "mocha": "^6.2.0"
     }
 }
