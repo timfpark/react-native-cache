@@ -1,3 +1,4 @@
+type ErrorCallback = (error: Error | undefined) => void;
 type Callback<T = string> = (error: Error | undefined, value: T) => void;
 type Key = string;
 type Value = string | undefined;
@@ -6,7 +7,7 @@ interface CachePolicy {
   maxEntries: number;
 }
 
-interface CacheConfig  {
+interface CacheConfig {
   namespace?: string;
   policy?: CachePolicy;
   backend: unknown;
