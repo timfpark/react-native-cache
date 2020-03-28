@@ -1,0 +1,13 @@
+{
+    "arrow-parens": "ban-single-arg-parens",
+    "defaultSeverity": "error",
+    "extends": ["tslint:recommended","tslint-config-prettier"],
+    "rules": {
+        "max-line-length": false,
+        "no-string-literal": false,
+        "no-console": false,
+        "no-var-requires": false,
+        "object-literal-sort-keys": false,
+        "ordered-imports": false
+    }
+}
