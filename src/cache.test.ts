@@ -6,7 +6,7 @@ const cache = new Cache({
     policy: {
         maxEntries: 1
     },
-    backend: new MemoryStore()
+    backend: MemoryStore
 });
 
 describe("cache", () => {

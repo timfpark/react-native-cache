@@ -1,14 +1,14 @@
 {
     "name": "react-native-cache",
-    "version": "2.0.0-rc.3",
+    "version": "2.0.0-rc.5",
     "description": "LRU cache built on AsyncStorage for react-native",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
     "scripts": {
         "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
         "build": "rm -rf dist && tsc",
-        "prepublish": "npm run build",
-        "test": "jest --coverage"
+        "prepublish": "npm test",
+        "test": "npm run build && jest --coverage"
     },
     "repository": {
         "type": "git",
@@ -31,5 +31,8 @@
         "tslint": "^6.1.0",
         "tslint-config-prettier": "^1.18.0",
         "typescript": "^3.8.3"
+    },
+    "dependencies": {
+        "@react-native-community/async-storage": "^1.8.1"
     }
 }

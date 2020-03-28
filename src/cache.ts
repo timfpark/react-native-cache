@@ -1,5 +1,16 @@
+export interface ICacheOptions {
+    // backend is expected to have the same static interface as AsyncStorage
+    backend: any;
+    namespace: string;
+    policy: ICachePolicy;
+}
+
+export interface ICachePolicy {
+    maxEntries: number;
+}
+
 export default class Cache {
-    protected backend: ICacheBackend;
+    protected backend: any;
     protected namespace: string;
     protected policy: ICachePolicy;
 
@@ -10,12 +21,12 @@ export default class Cache {
     }
 
     public async clearAll() {
-        const keys = await this.backend.getKeys();
+        const keys = await this.backend.getAllKeys();
         const namespaceKeys = keys.filter((key: string) => {
             return key.substr(0, this.namespace.length) === this.namespace;
         });
 
-        await this.backend.removeMultiple(namespaceKeys);
+        await this.backend.multiRemove(namespaceKeys);
 
         return this.setLRU([]);
     }
@@ -41,12 +52,12 @@ export default class Cache {
     }
 
     public async getAll() {
-        const keys = await this.backend.getKeys();
+        const keys = await this.backend.getAllKeys();
         const namespaceKeys = keys.filter((key: string) => {
             return key.substr(0, this.namespace.length) === this.namespace;
         });
 
-        const results = await this.backend.getMultiple(namespaceKeys);
+        const results = await this.backend.multiGet(namespaceKeys);
         const allEntries: { [key: string]: string } = {};
         for (const result of results) {
             const keyComponents = result[0].split(":");
@@ -81,7 +92,7 @@ export default class Cache {
 
     public async peek(key: string): Promise<string | undefined> {
         const compositeKey = this.makeCompositeKey(key);
-        const entryJsonString = await this.backend.get(compositeKey);
+        const entryJsonString = await this.backend.getItem(compositeKey);
 
         let entry;
         if (entryJsonString) {
@@ -98,7 +109,7 @@ export default class Cache {
 
     public async remove(key: string): Promise<void> {
         const compositeKey = this.makeCompositeKey(key);
-        await this.backend.remove(compositeKey);
+        await this.backend.removeItem(compositeKey);
 
         return this.removeFromLRU(key);
     }
@@ -112,7 +123,7 @@ export default class Cache {
         const compositeKey = this.makeCompositeKey(key);
         const entryString = JSON.stringify(entry);
 
-        await this.backend.set(compositeKey, entryString);
+        await this.backend.setItem(compositeKey, entryString);
         await this.refreshLRU(key);
         return this.enforceLimits();
     }
@@ -126,7 +137,7 @@ export default class Cache {
     }
 
     protected async getLRU() {
-        const lruString = await this.backend.get(this.getLRUKey());
+        const lruString = await this.backend.getItem(this.getLRUKey());
         let lru: string[];
 
         if (!lruString) {
@@ -162,26 +173,6 @@ export default class Cache {
     }
 
     protected async setLRU(lru: string[]) {
-        return this.backend.set(this.getLRUKey(), JSON.stringify(lru));
+        return this.backend.setItem(this.getLRUKey(), JSON.stringify(lru));
     }
-}
-
-export interface ICacheOptions {
-    backend: ICacheBackend;
-    namespace: string;
-    policy: ICachePolicy;
-}
-
-export interface ICachePolicy {
-    maxEntries: number;
-}
-
-// this backend interface has exactly the same interface as react-native-community/async-storage
-export interface ICacheBackend {
-    set(key: string, value: string): Promise<void>;
-    getKeys(): Promise<string[]>;
-    get(key: string): Promise<string>;
-    getMultiple(keys: string[]): Promise<any[][]>;
-    removeMultiple(keys: string[]): Promise<void>;
-    remove(key: string): Promise<void>;
 }

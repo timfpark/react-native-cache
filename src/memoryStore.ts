@@ -1,40 +1,34 @@
-import { ICacheBackend } from "./cache";
+const memoryStore: any = {};
 
-export default class MemoryStore implements ICacheBackend {
-    private store: any;
+export default {
+    setItem: async (key: string, value: string): Promise<void> => {
+        memoryStore[key] = value;
+    },
 
-    constructor() {
-        this.store = {};
-    }
+    getAllKeys: async (): Promise<string[]> => {
+        return Object.keys(memoryStore);
+    },
 
-    public async set(key: string, value: string): Promise<void> {
-        this.store[key] = value;
-    }
+    getItem: async (key: string): Promise<string> => {
+        return memoryStore[key];
+    },
 
-    public async getKeys(): Promise<string[]> {
-        return Object.keys(this.store);
-    }
-
-    public async get(key: string): Promise<string> {
-        return this.store[key];
-    }
-
-    public async getMultiple(keys: string[]): Promise<any[][]> {
+    multiGet: async (keys: string[]): Promise<any[][]> => {
         const results: any[][] = [];
         for (const key of keys) {
-            results.push([key, this.store[key]]);
+            results.push([key, memoryStore[key]]);
         }
 
         return results;
-    }
+    },
 
-    public async removeMultiple(keys: string[]): Promise<void> {
+    multiRemove: async (keys: string[]): Promise<void> => {
         for (const key of keys) {
-            delete this.store[key];
+            delete memoryStore[key];
         }
-    }
+    },
 
-    public async remove(key: string): Promise<void> {
-        delete this.store[key];
+    removeItem: async (key: string): Promise<void> => {
+        delete memoryStore[key];
     }
-}
+};
