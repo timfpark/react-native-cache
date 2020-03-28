@@ -1,10 +1,13 @@
 {
     "name": "react-native-cache",
-    "version": "1.1.8",
+    "version": "2.0.0-rc.2",
     "description": "LRU cache built on AsyncStorage for react-native",
-    "main": "lib/index.js",
+    "main": "dist/index.js",
     "scripts": {
-        "test": "mocha"
+        "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
+        "build": "rm -rf dist && tsc",
+        "prepublish": "npm run build",
+        "test": "jest --coverage"
     },
     "repository": {
         "type": "git",
@@ -16,10 +19,16 @@
         "url": "https://github.com/timfpark/react-native-cache/issues"
     },
     "homepage": "https://github.com/timfpark/react-native-cache#readme",
-    "dependencies": {
-        "async": "^3.1.0"
-    },
     "devDependencies": {
-        "mocha": "^6.2.0"
+        "@babel/preset-typescript": "^7.9.0",
+        "@types/jest": "^25.1.4",
+        "@types/node": "^13.9.5",
+        "husky": "^4.2.3",
+        "jest": "^25.2.3",
+        "ts-jest": "^25.2.1",
+        "ts-node-dev": "^1.0.0-pre.44",
+        "tslint": "^6.1.0",
+        "tslint-config-prettier": "^1.18.0",
+        "typescript": "^3.8.3"
     }
 }
