@@ -1,8 +1,9 @@
 {
     "name": "react-native-cache",
-    "version": "2.0.0-rc.2",
+    "version": "2.0.0-rc.3",
     "description": "LRU cache built on AsyncStorage for react-native",
-    "main": "dist/index.js",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
     "scripts": {
         "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
         "build": "rm -rf dist && tsc",
