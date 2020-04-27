@@ -58,21 +58,15 @@ export default class Cache {
         });
 
         const results = await this.backend.multiGet(namespaceKeys);
-        const allEntries: { [key: string]: string } = {};
-        for (const result of results) {
-            const keyComponents = result[0].split(":");
-
-            if (keyComponents.length !== 2) {
-                continue;
-            }
-
-            const key: string = keyComponents[1];
+        const allEntries: { [key: string]: any } = {};
+        for (const [compositeKey, value] of results) {
+            const key = this.fromCompositeKey(compositeKey);
 
             if (key === "_lru") {
                 continue;
             }
 
-            allEntries[key] = JSON.parse(result[1]);
+            allEntries[key] = JSON.parse(value);
         }
 
         return allEntries;
@@ -155,6 +149,10 @@ export default class Cache {
 
     protected makeCompositeKey(key: string) {
         return `${this.namespace}:${key}`;
+    }
+
+    protected fromCompositeKey(compositeKey: string) {
+        return compositeKey.slice(this.namespace.length + 1);
     }
 
     protected async refreshLRU(key: string) {

@@ -50,14 +50,21 @@ describe("cache", () => {
         expect(value).toBe("value1");
     });
 
+    it("can set and get entry with colon in key", async () => {
+        await cache.set("key2:key2", "value2");
+        const value = await cache.get("key2:key2");
+
+        expect(value).toBe("value2");
+    });
+
     it("can get all elements", async () => {
         const entries = await cache.getAll();
 
         expect(entries).not.toBeUndefined();
         expect(Object.keys(entries).length).toBe(1);
 
-        const key1Entry: any = entries["key1"];
-        expect(key1Entry["value"]).toBe("value1");
+        const key2Entry = entries["key2:key2"];
+        expect(key2Entry["value"]).toBe("value2");
     });
 
     it("can clear all elements", async () => {
