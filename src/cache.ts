@@ -110,7 +110,7 @@ export default class Cache {
             value = entry.value;
             if (this.policy.stdTTL > 0) {
                 const deadline = entry.created.getTime() + this.policy.stdTTL * 1000;
-                const now = (new Date()).getTime();
+                const now = Date.now();
                 if (deadline < now) {
                     this.remove(key);
                     value = undefined;
