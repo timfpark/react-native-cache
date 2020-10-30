@@ -7,6 +7,7 @@ export interface ICacheOptions {
 
 export interface ICachePolicy {
     maxEntries: number;
+    stdTTL: number; // second
 }
 
 export default class Cache {
@@ -18,6 +19,11 @@ export default class Cache {
         this.namespace = options.namespace;
         this.backend = options.backend;
         this.policy = options.policy;
+        let ttl = this.policy.stdTTL;
+        if (!ttl || typeof(ttl) !== 'number') {
+            ttl = 0;
+        }
+        this.policy.stdTTL = ttl;
     }
 
     public async clearAll() {
@@ -96,6 +102,14 @@ export default class Cache {
         let value;
         if (entry) {
             value = entry.value;
+            if (this.policy.stdTTL > 0) {
+                const deadline = entry.created.getTime() + this.policy.stdTTL * 1000;
+                const now = Date.now();
+                if (deadline < now) {
+                    this.remove(key);
+                    value = undefined;
+                }
+            }
         }
 
         return value;
