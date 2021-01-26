@@ -56,7 +56,7 @@ export default class Cache {
 
         await Promise.all(removePromises);
 
-        if(this.prunecallback !== undefined){
+        if(this.prunecallback !== undefined && victimList.length > 0){
             this.prunecallback(victimList);
         }
 
