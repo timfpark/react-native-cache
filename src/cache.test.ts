@@ -4,6 +4,7 @@ import MemoryStore from "../src/memoryStore";
 const cache = new Cache({
     namespace: "test",
     policy: {
+        stdTTL: 0,
         maxEntries: 1
     },
     backend: MemoryStore

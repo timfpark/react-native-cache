@@ -6,7 +6,7 @@
     "types": "./dist/index.d.ts",
     "scripts": {
         "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
-        "build": "rm -rf dist && tsc",
+        "build": "tsc",
         "prepublish": "npm test",
         "test": "npm run build && jest --coverage"
     },
