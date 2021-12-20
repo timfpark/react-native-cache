@@ -20,7 +20,7 @@ export default class Cache {
         this.backend = options.backend;
         this.policy = options.policy;
         let ttl = this.policy.stdTTL;
-        if (!ttl || typeof(ttl) !== 'number') {
+        if (!ttl || typeof ttl !== "number") {
             ttl = 0;
         }
         this.policy.stdTTL = ttl;
@@ -103,7 +103,8 @@ export default class Cache {
         if (entry) {
             value = entry.value;
             if (this.policy.stdTTL > 0) {
-                const deadline = entry.created.getTime() + this.policy.stdTTL * 1000;
+                const created = entry.created ? Date.parse(entry.created) : 0;
+                const deadline = created + this.policy.stdTTL * 1000;
                 const now = Date.now();
                 if (deadline < now) {
                     this.remove(key);
@@ -125,7 +126,7 @@ export default class Cache {
     public async set(key: string, value: string): Promise<void> {
         const entry = {
             created: new Date(),
-            value
+            value,
         };
 
         const compositeKey = this.makeCompositeKey(key);
