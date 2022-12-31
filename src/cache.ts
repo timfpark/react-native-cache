@@ -3,6 +3,7 @@ export interface ICacheOptions {
     backend: any;
     namespace: string;
     policy: ICachePolicy;
+    prunecallback? : ((keys : string[]) => void);
 }
 
 export interface ICachePolicy {
@@ -14,11 +15,13 @@ export default class Cache {
     protected backend: any;
     protected namespace: string;
     protected policy: ICachePolicy;
+    protected prunecallback? : ((keys : string[]) => void);
 
     constructor(options: ICacheOptions) {
         this.namespace = options.namespace;
         this.backend = options.backend;
         this.policy = options.policy;
+        this.prunecallback = options.prunecallback;
         let ttl = this.policy.stdTTL;
         if (!ttl || typeof ttl !== "number") {
             ttl = 0;
@@ -52,6 +55,10 @@ export default class Cache {
         }
 
         await Promise.all(removePromises);
+
+        if(this.prunecallback !== undefined && victimList.length > 0){
+            this.prunecallback(victimList);
+        }
 
         const survivorList = lru.slice(victimCount);
         return this.setLRU(survivorList);
