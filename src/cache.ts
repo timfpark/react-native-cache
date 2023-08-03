@@ -6,7 +6,7 @@ export interface ICacheOptions {
 }
 
 export interface ICachePolicy {
-    maxEntries: number;
+    maxEntries?: number;
     stdTTL: number; // second
 }
 
